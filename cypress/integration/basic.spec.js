@@ -22,4 +22,12 @@ describe('Cypress basics',()=>{
              //TODO Escrever o title em um campo de texto
 
     })
+
+    it.only('Should find and interact with an element',()=>{
+    cy.visit('https://wcaquino.me/cypress/componentes.html')
+    cy.get('#buttonSimple')
+        .click()
+        .should('have.value','Obrigado!')
+    })
+
 })
