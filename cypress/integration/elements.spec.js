@@ -54,7 +54,20 @@ beforeEach(()=>{
             .should('be.checked')
         cy.get('#formSexoMasc').should('not.be.checked')
         cy.get("[name='formSexo']").should('have.length',2)
+    })
 
+    it.only('CheckBox',()=>{
+        cy.get('#formComidaPizza')
+            .click()
+            .should('have.be.checked')
+        cy.get('[name="formComidaFavorita"]')
+            .should('have.length',4)
+            .click({multiple:true})
+        cy.get('#formComidaPizza')
+            .should('not.be.checked')
+        cy.get('#formComidaVegetariana')
+            .should('be.checked')
+            
     })
 })
 
