@@ -56,7 +56,7 @@ beforeEach(()=>{
         cy.get("[name='formSexo']").should('have.length',2)
     })
 
-    it.only('CheckBox',()=>{
+    it('CheckBox',()=>{
         cy.get('#formComidaPizza')
             .click()
             .should('have.be.checked')
@@ -66,8 +66,13 @@ beforeEach(()=>{
         cy.get('#formComidaPizza')
             .should('not.be.checked')
         cy.get('#formComidaVegetariana')
-            .should('be.checked')
-            
+            .should('be.checked')      
+    })
+
+    it.only('Combo',()=>{
+        cy.get('[data-test=dataEscolaridade]')
+            .select('2o grau completo')
+            .should('have.value','2graucomp')
     })
 })
 
