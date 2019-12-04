@@ -69,10 +69,19 @@ beforeEach(()=>{
             .should('be.checked')      
     })
 
-    it.only('Combo',()=>{
+    it('Combo',()=>{
         cy.get('[data-test=dataEscolaridade]')
             .select('2o grau completo')
             .should('have.value','2graucomp')
+
+        //TODO validar as opções do combo
+    })
+
+    it('Combo Multiplo',()=>{
+        cy.get('[data-testid=dataEsportes]')
+            .select(['natacao','Corrida','nada'])
+
+        //TODO validar opções selecionadas do cambo múltiplo
     })
 })
 
