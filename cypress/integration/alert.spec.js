@@ -27,6 +27,27 @@ describe('Work with alerts',()=>{
             expect(stub.getCall(0)).to.be.calledWith('Alert Simples')
         })
             
-        })
-
     })
+
+    it.only('Confirm',() => {
+        cy.on('window:confirm', msg =>{
+            expect(msg).to.be.equal('Confirm Simples')
+        })
+        Cypress.on('window:alert', msg =>{
+            expect(msg).to.be.equal('Confirmado')
+        })
+        cy.get('#confirm').click()
+    })
+    it.only('Deny',() => {
+        cy.on('window:confirm', msg =>{
+            expect(msg).to.be.equal('Confirm Simples')
+            return false
+        })
+        Cypress.on('window:alert', msg =>{
+            expect(msg).to.be.equal('Negado')
+        })
+        cy.get('#confirm').click()
+    })
+
+
+})
