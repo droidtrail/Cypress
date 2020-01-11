@@ -20,7 +20,7 @@ describe('Work with alerts',()=>{
 
     })
 
-    it.only('Alertcom Mock',()=>{
+    it('Alertcom Mock',()=>{
         const stub = cy.stub().as('alerta')
         cy.on('window:alert', stub)
         cy.get('#alert').click().then(()=>{
@@ -29,7 +29,7 @@ describe('Work with alerts',()=>{
             
     })
 
-    it.only('Confirm',() => {
+    it('Confirm',() => {
         cy.on('window:confirm', msg =>{
             expect(msg).to.be.equal('Confirm Simples')
         })
@@ -38,7 +38,7 @@ describe('Work with alerts',()=>{
         })
         cy.get('#confirm').click()
     })
-    it.only('Deny',() => {
+    it('Deny',() => {
         cy.on('window:confirm', msg =>{
             expect(msg).to.be.equal('Confirm Simples')
             return false
@@ -49,7 +49,7 @@ describe('Work with alerts',()=>{
         cy.get('#confirm').click()
     })
 
-    it.only('Prompt',() => {
+    it('Prompt',() => {
         cy.window().then(win => {
             cy.stub(win,'prompt').returns('42')
         })
@@ -64,5 +64,34 @@ describe('Work with alerts',()=>{
         cy.get('#prompt').click()
     })
 
+    //35. Desafio: Validar mensagens
+    it.only('Validando Mensagens',()=>{
+
+        //Criando um Stub
+        const stub = cy.stub().as('alerta')
+
+        /*Quando o evento de WINDOW:ALERT for exibido, o Cypress pegará o evento (pelo cy.on)
+        e atribuirá a constante (const) stub. Com isso conseguiremos manipular o Alert.
+        */
+       cy.on('window:alert',stub)
+
+       /*Após o evento de Click, será feito uma assertiva (expect) no texto da 
+       mensagem (Nome eh obrigatorio)*/
+       cy.get('#formCadastrar').click()
+            .then(() => expect(stub.getCall(0)).to.be.calledWith('Nome eh obrigatorio'))
+
+        //Preenchendo o nome, clicando no botão e fazendo a acertiva    
+        cy.get('#formNome').type('Leandro')
+        cy.get('#formCadastrar').click()
+            .then(() => expect(stub.getCall(1)).to.be.calledWith('Sobrenome eh obrigatorio'))
+
+        //Preenchendo o SobreNome, clicando no botão e fazendo a acertiva    
+        cy.get('[data-cy=dataSobrenome]').type('Pereira')
+        cy.get('#formCadastrar').click()
+            .then(() => expect(stub.getCall(2)).to.be.calledWith('Sexo eh obrigatorio'))
+
+        cy.get('#formSexoMasc').click()    
+        cy.get('#formCadastrar').click()
+        })
 
 })
