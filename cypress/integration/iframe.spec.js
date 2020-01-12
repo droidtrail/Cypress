@@ -10,7 +10,7 @@ describe('Work with IFrames',()=>{
         cy.reload()
     })
 
-        it('Deve preencher campo de tecto', ()=>{
+        it('Deve preencher campo de texto', ()=>{
 
         cy.get('#frame1').then(iframe =>{
             const body = iframe.contents().find('body')
@@ -22,9 +22,19 @@ describe('Work with IFrames',()=>{
                  expect(msg).to.be.equal('Alert Simples')
                 
         })
-        cy.wrap(body).find('#otherButton').click()
+        // cy.wrap(body).find('#otherButton').click()
         
         })  
     })
-})
 
+    it('Deve testar frame diretamente', ()=>{
+
+        cy.visit('https://wcaquino.me/cypress/frame.html')
+        
+        cy.get('#otherButton').click()
+        cy.on('window:alert', msg =>{
+            expect(msg).to.be.equal('Click OK!')
+        })
+
+    })
+})
