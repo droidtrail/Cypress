@@ -20,9 +20,14 @@ describe('Work with basic elements',()=>{
     })
 
     it('using xpath',()=>{
-
-        cy.xpath('//input')
-
+   
+        cy.xpath('//input[contains(@onclick,\'Francisco\')]')
+        cy.xpath("//table[@id='tabelaUsuarios']/tbody//td[contains(.,'Francisco')]/following-sibling::td/input")
+        cy.xpath("//table[@id='tabelaUsuarios']/tbody//td[contains(.,'Francisco')]/..//input[@type='text']")
+        cy.xpath("//*[@data-test='data2']")
+        cy.xpath("//td[contains(.,'Usuario A')]/following-sibling::td[contains(.,'Mestrado')]/..//input[@type='text']").type('Funciona')
+        //cy.xpath("//table[@id='tabelaUsuarios']/tbody//td[contains(.,'Doutorado')])[2]/..//input[@type='text']")
+        //cy.xpath("//table[@id='tabelaUsuarios']/tbody//td[contains(.,'Doutorado')])[2]/..//input[@type='radio']")
+        //cy.xpath("//table[@id='tabelaUsuarios']/tbody//td[contains(.,'Doutorado')])[2]/..//input[@type='checkbox']")
     })
-
 })
