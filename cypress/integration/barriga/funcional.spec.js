@@ -1,6 +1,6 @@
 /// <reference types = "cypress" />
 
-describe('Should test at a funcional level',()=>{
+describe('Deve fazer teste a nível funcional',()=>{
 
     before(()=>{
         cy.visit('http://barrigareact.wcaquino.me/')
@@ -10,9 +10,13 @@ describe('Should test at a funcional level',()=>{
         cy.get('.toast-message').should('contain','Bem vindo,')
     })
 
-    it('...',()=>{
+    it('Deve criar uma conta',()=>{
 
-        
+        cy.get('.dropdown-toggle').click()
+        cy.get('[href="/contas"]').click()
+        cy.get('.form-control').type('Conta de teste')
+        cy.get('.btn').click()
+        cy.get('.toast-message').should('contain','Conta inserida com sucesso!')
 
     })
 
