@@ -22,6 +22,6 @@ import './commands'
 require('cypress-xpath')
 
 Cypress.SelectorPlayground.defaults({
-    selectorPriority: ['data-wc','id', 'class', 'attributes','data-cy','data-test','data-testid','tag','nth-child']
+    selectorPriority: ['data-test','data-cy','id', 'class', 'attributes','data-testid','tag','nth-child','data-wc']
   })
 
