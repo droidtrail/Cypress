@@ -8,6 +8,7 @@ LOGIN:{
     MENU:{
         SETTINGS: '[data-test=menu-settings]',
         CONTAS: '[href="/contas"]',
+        RESET:'[href="/reset"]',
     },
     CONTAS:{
         NOME: '[data-test=nome]',

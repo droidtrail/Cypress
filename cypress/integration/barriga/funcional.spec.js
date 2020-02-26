@@ -5,11 +5,9 @@ import loc from '../../support/locators'
 describe('Deve fazer teste a nível funcional',()=>{
 
     before(()=>{
-        cy.visit('http://barrigareact.wcaquino.me/')
-        cy.get(loc.LOGIN.USER).type('leandro.nares@gmail.com')
-        cy.get(loc.LOGIN.PASSWORD).type('123')
-        cy.get(loc.LOGIN.BTN_LOGIN).click()
-        cy.get(loc.MESSAGE).should('contain','Bem vindo,')
+       //support/commands.js
+       cy.login()
+       cy.resetApp()
     })
 
     it.only('Deve criar uma conta',()=>{
