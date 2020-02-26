@@ -19,7 +19,7 @@ describe('Deve fazer teste a nível funcional',()=>{
 
     it('Deve alterar conta',()=>{
         cy.acessarMenuConta()
-        cy.xpath(loc.CONTAS.XP_BTN_ALTERAR).click()
+        cy.xpath(loc.CONTAS.FN_XP_BTN_ALTERAR('Conta de teste')).click()
         cy.get(loc.CONTAS.NOME)
             .clear()
             .type('Conta alterada')
@@ -39,9 +39,17 @@ describe('Deve fazer teste a nível funcional',()=>{
         cy.get(loc.MOVIMENTACAO.DESCRIÇÃO).type('Desc')
         cy.get(loc.MOVIMENTACAO.VALOR).type('123')
         cy.get(loc.MOVIMENTACAO.INTERESSADO).type('Inter')
+        cy.get(loc.MOVIMENTACAO.CONTA).select('Conta alterada')
+        cy.get(loc.MOVIMENTACAO.STATUS_PAGA).click()
         cy.get(loc.MOVIMENTACAO.BTN_SALVAR_MOVIMENTACAO).click()
         cy.get(loc.MESSAGE).should('contain','Movimentação inserida com sucesso!')
         cy.get(loc.EXTRATO.LINHAS_TABELA_EXTRATO).should('have.length',7)
-        cy.xpath(loc.EXTRATO.XP_BUSCA_ELEMENTO).should('exist')
+        cy.xpath(loc.EXTRATO.FN_XP_BUSCA_ELEMENTO('Desc','123')).should('exist')
+    })
+
+    it('Deve pegar o saldo',()=>{
+        cy.get(loc.MENU.HOME).click()
+        cy.xpath(loc.SALDO.FN_XP_SALDO_CONTA('Conta alterada'))
+            .should('contain','123')
     })
 })
