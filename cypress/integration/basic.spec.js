@@ -8,7 +8,7 @@ describe('Cypress basics',()=>{
         //console.log(title)
 
         cy.title().should('be.equal','Campo de Treinamento')
-        cy.title().should('contain','Campo')
+        cy.title().should('contain','Campo').debug()
 
         cy.title()
             .should('be.equal','Campo de Treinamento')
