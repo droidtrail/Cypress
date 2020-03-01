@@ -1,9 +1,13 @@
 /// <reference types = "cypress" />
 
 describe('Deve fazer teste a nível funcional',()=>{
+    let token
 
     before(()=>{
-         
+        cy.getToken('leandro.nares@gmail.com','123')
+            .then(tkn=>{
+                token = tkn
+            })   
     })
 
     beforeEach(()=>{
@@ -12,17 +16,6 @@ describe('Deve fazer teste a nível funcional',()=>{
 
     it('Deve criar uma conta',()=>{
         cy.request({
-
-            method: 'POST',
-            url: 'https://barrigarest.wcaquino.me/signin',
-            body:{
-                email: "leandro.nares@gmail.com",
-                senha: "123",
-                redirecionar: false
-            }
-        }).its('body.token').should('not.be.empty')
-          .then(token=>{
-            cy.request({
                 method:'POST',
                 // headers:{Authorization:`bearer ${token}`},
                 headers:{Authorization:`JWT ${token}`},
@@ -30,8 +23,8 @@ describe('Deve fazer teste a nível funcional',()=>{
                 body:{
                     nome: "Conta via rest"
                 }
-            }).as('response')
-        })
+        }).as('response')
+        
         cy.get('@response').then(res=>{
             expect(res.status).to.be.equal(201)
             expect(res.body).to.have.property('id')
