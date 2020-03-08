@@ -11,18 +11,17 @@ describe('Deve fazer teste a nível funcional',()=>{
     })
 
     beforeEach(()=>{
-        
+        cy.resetRest()
     })
 
     it('Deve criar uma conta',()=>{
-        cy.request({
-                method:'POST',
-                // headers:{Authorization:`bearer ${token}`},
-                headers:{Authorization:`JWT ${token}`},
-                url:'https://barrigarest.wcaquino.me/contas',
-                body:{
-                    nome: "Conta via rest"
-                }
+        cy.request({ 
+            url:'/contas',
+            method:'POST',
+            headers:{Authorization:`JWT ${token}`},
+            body:{
+                nome: "Conta via rest"
+            }
         }).as('response')
         
         cy.get('@response').then(res=>{
