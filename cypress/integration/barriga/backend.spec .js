@@ -29,7 +29,7 @@ describe('Deve fazer teste a nível funcional',()=>{
         })
     })
 
-    it.only('Deve alterar conta',()=>{
+    it('Deve alterar conta',()=>{
         cy.request({
 
             method:'GET',
@@ -39,7 +39,7 @@ describe('Deve fazer teste a nível funcional',()=>{
 
         }).then(res => {
            cy.request({
-               url:`https://barrigarest.wcaquino.me/contas/${res.body[0].id}`,
+               url:`/contas/${res.body[0].id}`,
                method:'PUT',
                headers: {Authorization: `JWT ${token}` },
                body:{
@@ -51,10 +51,22 @@ describe('Deve fazer teste a nível funcional',()=>{
            cy.get('@response').its('status').should('be.equal',200)
     })
         
-    it('Não deve criar uma conta com o mesmo nome',()=>{
+    it.only('Não deve criar uma conta com o mesmo nome',()=>{
+           cy.request({ 
+             url:'/contas',
+             method:'POST',
+             headers:{Authorization:`JWT ${token}`},
+             body:{nome: "Conta mesmo nome"},
+             failOnStatusCode: false
+            }).as('response')
+            
+            cy.get('@response').then(res=>{
+                console.log(res)
+                expect(res.status).to.be.equal(400)
+                expect(res.body.error).to.be.equal('Já existe uma conta com esse nome!')
+            })
+        })
         
-    })
-
     it('Deve criar uma transação',()=>{
         
     })
