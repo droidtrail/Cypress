@@ -15,6 +15,7 @@ describe('Deve fazer teste a nível funcional',()=>{
     })
 
     it('Deve criar uma conta',()=>{
+        cy.getContaByName('Conta para movimentacoes')
         cy.request({ 
             url:'/contas',
             method:'POST',
@@ -30,28 +31,22 @@ describe('Deve fazer teste a nível funcional',()=>{
     })
 
     it('Deve alterar conta',()=>{
-        cy.request({
+        cy.getContaByName('Conta para alterar')
+            .then(conta_id => {
+                cy.request({
+                    method:'PUT',
+                    url:`/contas/${conta_id}`,
+                    headers:{Authorization:`JWT ${token}`},
+                    body:{nome:'conta alterada via rest'}
+            }).as('response')
 
-            method:'GET',
-            url:'/contas',
-            headers:{Authorization:`JWT ${token}`},
-            qs:{nome:'Conta para alterar'}
-
-        }).then(res => {
-           cy.request({
-               url:`/contas/${res.body[0].id}`,
-               method:'PUT',
-               headers: {Authorization: `JWT ${token}` },
-               body:{
-                   nome:'Conta alterada via rest'
-                }
-           }).as('response')
+        cy.get('@response').its('status').should('be.equal', 200)
 
         })
-           cy.get('@response').its('status').should('be.equal',200)
+          
     })
         
-    it.only('Não deve criar uma conta com o mesmo nome',()=>{
+    it('Não deve criar uma conta com o mesmo nome',()=>{
            cy.request({ 
              url:'/contas',
              method:'POST',
@@ -61,22 +56,40 @@ describe('Deve fazer teste a nível funcional',()=>{
             }).as('response')
             
             cy.get('@response').then(res=>{
-                console.log(res)
                 expect(res.status).to.be.equal(400)
                 expect(res.body.error).to.be.equal('Já existe uma conta com esse nome!')
             })
         })
         
     it('Deve criar uma transação',()=>{
+        //Busca pelo nome da conta
+        cy.getContaByName('Conta para movimentacoes')
+        .then(contId => {
+            cy.request({ 
+                url:'/transacoes',
+                method:'POST',
+                headers:{Authorization:`JWT ${token}`},
+                body:{
+                  tipo: "REC",
+                  data_transacao:Cypress.moment().add({day: 0}).format('DD/MM/YYYY'),
+                  data_pagamento:Cypress.moment().format('DD/MM/YYYY'),
+                  descricao:"des",
+                  valor:"10000",
+                  envolvido:"CCC",
+                  conta_id:contId,
+                  status: true},
+                }).as('response')
+                cy.get('@response').its('status').should('be.equal',201)
+                cy.get('@response').its('body.id').should('exist')
+            })
+        })
         
-    })
+        it('Deve pegar o saldo',()=>{
+        
+        })
 
-    it('Deve pegar o saldo',()=>{
-        
+        it('Deve remover uma movimentação',()=>{
+            
+            
+        })
     })
-
-    it('Deve remover uma movimentação',()=>{
-        
-        
-    })
-})
