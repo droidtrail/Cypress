@@ -82,11 +82,11 @@ describe('Deve fazer teste a nível funcional',()=>{
             })
         })
         
-        it.only('Deve pegar o saldo',()=>{
-                cy.request({ 
-                    url:'/saldo',
-                    method:'GET',
-                    headers:{Authorization:`JWT ${token}`},
+    it('Deve pegar o saldo',()=>{
+        cy.request({ 
+            url:'/saldo',
+               method:'GET',
+                headers:{Authorization:`JWT ${token}`},
                 }).then(res => {
                     let saldoConta = null
                     res.body.forEach(c => {
@@ -132,8 +132,22 @@ describe('Deve fazer teste a nível funcional',()=>{
                 })
         })
 
-        it('Deve remover uma movimentação',()=>{
-            
+        it.only('Deve remover uma movimentação',()=>{
+
+            cy.request({
+                method:'GET',
+                url:'/transacoes',
+                headers: {Authorization:`JWT ${token}`},
+                qs: { descricao: 'Movimentacao para exclusao'}
+            }).then(res =>{
+                cy.request({
+                    url:`/transacoes/${res.body[0].id}`,
+                    method:'DELETE',
+                    headers: { Authorization:`JWT ${token}`},
+                    
+                }).its('status').should('be.equal', 204)
+
+            })
             
         })
     })
