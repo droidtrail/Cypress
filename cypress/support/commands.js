@@ -34,10 +34,10 @@ Cypress.Commands.add('clickAlert',(locator, message)=>{
     })
 })
 
-Cypress.Commands.add('login',()=>{
+Cypress.Commands.add('login',(usuario, senha)=>{
     cy.visit('http://barrigareact.wcaquino.me/')
-    cy.get(loc.LOGIN.USER).type('leandro.nares@gmail.com')
-    cy.get(loc.LOGIN.PASSWORD).type('123')
+    cy.get(loc.LOGIN.USER).type(usuario)
+    cy.get(loc.LOGIN.PASSWORD).type(senha)
     cy.get(loc.LOGIN.BTN_LOGIN).click()
     cy.get(loc.MESSAGE).should('contain','Bem vindo,')
 })
