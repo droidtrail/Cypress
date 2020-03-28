@@ -42,6 +42,10 @@ describe('Deve fazer teste a nível funcional',()=>{
         cy.resetApp()
     })
 
+    after(()=>{
+        cy.clearLocalStorage()
+    })
+
     it('Deve criar uma conta',()=>{
         cy.acessarMenuConta()
         cy.inserirConta('Conta de teste')
