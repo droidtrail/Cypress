@@ -46,7 +46,7 @@ describe('Deve fazer teste a nível funcional',()=>{
         cy.clearLocalStorage()
     })
 
-    it('Deve criar uma conta',()=>{
+    it.skip('Deve criar uma conta',()=>{
         cy.route({
             method:'GET',
             url:'/contas',
@@ -65,8 +65,7 @@ describe('Deve fazer teste a nível funcional',()=>{
         }).as('Inserir Conta')
 
         cy.acessarMenuConta()
-
-        cy.route({
+            cy.route({
             method:'GET',
             url:'/contas',
             response:[
@@ -80,14 +79,41 @@ describe('Deve fazer teste a nível funcional',()=>{
         cy.get(loc.MESSAGE).should('contain','Conta inserida com sucesso!')
     })
 
-    it.skip('Deve alterar conta',()=>{
+    it('Deve alterar conta',()=>{
+        cy.server()
+        cy.route({
+            method:'GET',
+            url:'/contas',
+            response:[
+                {id:'03',nome:'Carteira',visivel:true,usuario_id:1},
+                {id:'04',nome:'Banco',visivel:true,usuario_id:1},
+            ]
+        }).as('Obter Conta')
+
+        cy.route({
+            method:'PUT',
+            url:'/contas/**',
+            response:
+                {id:'03',nome:'Conta Alterada',visivel:true,usuario_id:1},   
+            }).as('Inserir Conta Alterada')
+
+        cy.route({
+            method:'GET',
+            url:'/contas',
+            response:[
+                {id:'03',nome:'Conta Alterada',visivel:true,usuario_id:1},
+                {id:'04',nome:'Banco',visivel:true,usuario_id:1},
+                ]
+            }).as('Obter Conta Alterada')
+
         cy.acessarMenuConta()
-        cy.xpath(loc.CONTAS.FN_XP_BTN_ALTERAR('Conta para alterar')).click()
+        cy.xpath(loc.CONTAS.FN_XP_BTN_ALTERAR('Banco')).click()
         cy.get(loc.CONTAS.NOME)
-            .clear()
-            .type('Conta alterada')
+              .clear()
+              .type('Conta Alterada')
         cy.get(loc.CONTAS.BTN_SALVAR).click({force:true})
-        cy.get(loc.MESSAGE).should('contain','Conta inserida com sucesso!')   
+        cy.get(loc.MESSAGE).should('contain','Conta atualizada com sucesso')
+          
     })
 
     it.skip('Não deve criar uma conta com o mesmo nome',()=>{

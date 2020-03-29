@@ -20,7 +20,7 @@ const locators={
     CONTAS:{
         NOME: '[data-test=nome]',
         BTN_SALVAR: '.btn',
-        FN_XP_BTN_ALTERAR: nome =>`//table[@class='table']/tbody/tr/td[contains(.,\'${nome}\')]/..//i[@class='far fa-trash-alt']`,
+        FN_XP_BTN_ALTERAR: nome =>`//table[@class='table']/tbody/tr/td[contains(.,\'${nome}\')]/..//i[@class='far fa-edit']`,
     },
 
     MOVIMENTACAO:{
