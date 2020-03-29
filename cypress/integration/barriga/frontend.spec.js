@@ -16,14 +16,12 @@ describe('Deve fazer teste a nível funcional',()=>{
         cy.clearLocalStorage()
     })
 
-    it('Deve criar uma conta',()=>{
-        
+    it('Deve criar uma conta',()=>{ 
         cy.route({
             method:'POST',
             url:'/contas',
             response:
-                {id:'05',nome:'Conta de teste',visivel:true,usuario_id:1}
-            
+                {id:'05',nome:'Conta de teste',visivel:true,usuario_id:1}     
         }).as('Inserir Conta')
 
         cy.acessarMenuConta()
@@ -62,9 +60,16 @@ describe('Deve fazer teste a nível funcional',()=>{
           
     })
 
-    it('Não deve criar uma conta com o mesmo nome',()=>{
+    it.only('Não deve criar uma conta com o mesmo nome',()=>{
+        cy.route({
+            method:'POST',
+            url:'/contas',
+            response: {"error":"Já existe uma conta com esse nome!"},
+            status: 400   
+        }).as('Conta Duplicada')
+        
         cy.acessarMenuConta()
-        cy.inserirConta('Conta mesmo nome')
+        cy.inserirConta('Conta de teste')
         cy.get(loc.CONTAS.BTN_SALVAR).click({force:true})
         cy.get(loc.MESSAGE).should('contain','status code 400')
     })
