@@ -60,7 +60,7 @@ describe('Deve fazer teste a nível funcional',()=>{
           
     })
 
-    it.only('Não deve criar uma conta com o mesmo nome',()=>{
+    it('Não deve criar uma conta com o mesmo nome',()=>{
         cy.route({
             method:'POST',
             url:'/contas',
@@ -74,16 +74,48 @@ describe('Deve fazer teste a nível funcional',()=>{
         cy.get(loc.MESSAGE).should('contain','status code 400')
     })
 
-    it('Deve criar uma transação',()=>{
+    it.only('Deve criar uma transação',()=>{
+        cy.route({
+            method:'POST',
+            url:'/transacoes',
+            response: {
+                tipo: "REC",
+                data_transacao: "29/03/2020",
+                data_pagamento: "29/03/2020",
+                descricao: "Descrição",
+                valor: "12345.00",
+                envolvido: "Daniele Cordeiro",
+                conta_id: "91005",
+                status: false
+            },    
+        }).as('Criar Transação')
+
+        cy.route({
+            method:'GET',
+            url:'/extrato/**',
+            response: [
+                {conta:'Conta para movimentacoes',id:76194,descricao:'Desc',envolvido:'Inter',observacao:'null',tipo:'REC',data_transacao:'2020-03-29T03:00:00.000Z',data_pagamento:'2020-03-29T03:00:00.000Z',valor:'123.00','status':false,conta_id:'91005',usuario_id:'3839',transferencia_id:null,parcelamento_id:null},
+                {conta:'Teste',id:76244,descricao:'Desc',envolvido:'Inter',observacao:null,tipo:'REC',data_transacao:'2020-03-29T03:00:00.000Z',data_pagamento:'2020-03-29T03:00:00.000Z',valor:'123.00',status:false,'conta_id':91010,usuario_id:'3839',transferencia_id:null,parcelamento_id:null},
+                {conta:"Teste",id:76245,descricao:"Desc",envolvido:"Inter",observacao:null,tipo:"REC",data_transacao:"2020-03-29T03:00:00.000Z",data_pagamento:"2020-03-29T03:00:00.000Z",valor:"123.00",status:false,conta_id:91010,usuario_id:3839,transferencia_id:null,parcelamento_id:null},
+                {conta:"Conta com movimentacao",id:75546,descricao:"Movimentacao de conta",envolvido:"BBB",observacao:null,tipo:"DESP",data_transacao:"2020-03-28T03:00:00.000Z",data_pagamento:"2020-03-28T03:00:00.000Z",valor:"-1500.00",status:true,conta_id:91006,usuario_id:3839,transferencia_id:null,parcelamento_id:null},
+                {conta:"Conta para saldo",id:75547,descricao:"Movimentacao 1, calculo saldo",envolvido:"CCC",observacao:null,tipo:"REC",data_transacao:"2020-03-28T03:00:00.000Z",data_pagamento:"2020-03-28T03:00:00.000Z",valor:"3500.00",status:false,conta_id:91007,usuario_id:3839,transferencia_id:null,parcelamento_id:null},
+                {conta:"Conta para saldo",id:75548,descricao:"Movimentacao 2, calculo saldo",envolvido:"DDD",observacao:null,tipo:"DESP",data_transacao:"2020-03-28T03:00:00.000Z",data_pagamento:"2020-03-28T03:00:00.000Z",valor:"-1000.00",status:true,conta_id:91007,"usuario_id":3839,"transferencia_id":null,"parcelamento_id":null},
+                {conta:"Conta para saldo",id:75549,descricao:"Movimentacao 3, calculo saldo",envolvido:"EEE",observacao:null,tipo:"REC",data_transacao:"2020-03-28T03:00:00.000Z",data_pagamento:"2020-03-28T03:00:00.000Z",valor:"1534.00",status:true,"conta_id":91007,"usuario_id":3839,"transferencia_id":null,"parcelamento_id":null},
+                {conta:"Conta para extrato",id:75550,descricao:"Movimentacao para extrato",envolvido:"FFF",observacao:null,tipo:"DESP",data_transacao:"2020-03-28T03:00:00.000Z",data_pagamento:"2020-03-28T03:00:00.000Z",valor:"-220.00",status:true,"conta_id":91008,"usuario_id":3839,"transferencia_id":null,"parcelamento_id":null},
+                {conta:"Teste",id:76193,descricao:"Desc",envolvido:"Inter",observacao:null,tipo:"REC",data_transacao:"2020-03-29T03:00:00.000Z",data_pagamento:"2020-03-29T03:00:00.000Z",valor:"123.00",status:false,conta_id:91010,usuario_id:3839,transferencia_id:null,parcelamento_id:null}
+            ]    
+        }).as('Criar Transação')
+       
         cy.get(loc.MENU.MOVIMENTACAO).click()
-        cy.get(loc.MOVIMENTACAO.DESCRIÇÃO).type('Desc')
-        cy.get(loc.MOVIMENTACAO.VALOR).type('123')
-        cy.get(loc.MOVIMENTACAO.INTERESSADO).type('Inter')
-        cy.get(loc.MOVIMENTACAO.CONTA).select('Conta para movimentacoes')
+        cy.get(loc.MOVIMENTACAO.DESCRIÇÃO).type('Descrição')
+        cy.get(loc.MOVIMENTACAO.VALOR).type('12345.00')
+        cy.get(loc.MOVIMENTACAO.INTERESSADO).type('Daniele Cordeiro')
+        cy.get(loc.MOVIMENTACAO.CONTA).select('Banco')
         cy.get(loc.MOVIMENTACAO.STATUS_PAGA).click()
         cy.get(loc.MOVIMENTACAO.BTN_SALVAR_MOVIMENTACAO).click()
         cy.get(loc.MESSAGE).should('contain','Movimentação inserida com sucesso!')
-        cy.get(loc.EXTRATO.LINHAS_TABELA_EXTRATO).should('have.length',7)
+        cy.get(loc.EXTRATO.LINHAS_TABELA_EXTRATO)
+            .should('have.length',9)
         cy.xpath(loc.EXTRATO.FN_XP_BUSCA_ELEMENTO('Desc','123')).should('exist')
     })
 

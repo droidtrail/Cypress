@@ -36,4 +36,5 @@ const buildEnv = () =>{
         ]
     }).as('Obter Contas')
 }
+
 export default buildEnv
