@@ -93,17 +93,7 @@ describe('Deve fazer teste a nível funcional',()=>{
         cy.route({
             method:'GET',
             url:'/extrato/**',
-            response: [
-                {conta:'Conta para movimentacoes',id:76194,descricao:'Desc',envolvido:'Inter',observacao:'null',tipo:'REC',data_transacao:'2020-03-29T03:00:00.000Z',data_pagamento:'2020-03-29T03:00:00.000Z',valor:'123.00','status':false,conta_id:'91005',usuario_id:'3839',transferencia_id:null,parcelamento_id:null},
-                {conta:'Teste',id:76244,descricao:'Desc',envolvido:'Inter',observacao:null,tipo:'REC',data_transacao:'2020-03-29T03:00:00.000Z',data_pagamento:'2020-03-29T03:00:00.000Z',valor:'123.00',status:false,'conta_id':91010,usuario_id:'3839',transferencia_id:null,parcelamento_id:null},
-                {conta:"Teste",id:76245,descricao:"Desc",envolvido:"Inter",observacao:null,tipo:"REC",data_transacao:"2020-03-29T03:00:00.000Z",data_pagamento:"2020-03-29T03:00:00.000Z",valor:"123.00",status:false,conta_id:91010,usuario_id:3839,transferencia_id:null,parcelamento_id:null},
-                {conta:"Conta com movimentacao",id:75546,descricao:"Movimentacao de conta",envolvido:"BBB",observacao:null,tipo:"DESP",data_transacao:"2020-03-28T03:00:00.000Z",data_pagamento:"2020-03-28T03:00:00.000Z",valor:"-1500.00",status:true,conta_id:91006,usuario_id:3839,transferencia_id:null,parcelamento_id:null},
-                {conta:"Conta para saldo",id:75547,descricao:"Movimentacao 1, calculo saldo",envolvido:"CCC",observacao:null,tipo:"REC",data_transacao:"2020-03-28T03:00:00.000Z",data_pagamento:"2020-03-28T03:00:00.000Z",valor:"3500.00",status:false,conta_id:91007,usuario_id:3839,transferencia_id:null,parcelamento_id:null},
-                {conta:"Conta para saldo",id:75548,descricao:"Movimentacao 2, calculo saldo",envolvido:"DDD",observacao:null,tipo:"DESP",data_transacao:"2020-03-28T03:00:00.000Z",data_pagamento:"2020-03-28T03:00:00.000Z",valor:"-1000.00",status:true,conta_id:91007,"usuario_id":3839,"transferencia_id":null,"parcelamento_id":null},
-                {conta:"Conta para saldo",id:75549,descricao:"Movimentacao 3, calculo saldo",envolvido:"EEE",observacao:null,tipo:"REC",data_transacao:"2020-03-28T03:00:00.000Z",data_pagamento:"2020-03-28T03:00:00.000Z",valor:"1534.00",status:true,"conta_id":91007,"usuario_id":3839,"transferencia_id":null,"parcelamento_id":null},
-                {conta:"Conta para extrato",id:75550,descricao:"Movimentacao para extrato",envolvido:"FFF",observacao:null,tipo:"DESP",data_transacao:"2020-03-28T03:00:00.000Z",data_pagamento:"2020-03-28T03:00:00.000Z",valor:"-220.00",status:true,"conta_id":91008,"usuario_id":3839,"transferencia_id":null,"parcelamento_id":null},
-                {conta:"Teste",id:76193,descricao:"Desc",envolvido:"Inter",observacao:null,tipo:"REC",data_transacao:"2020-03-29T03:00:00.000Z",data_pagamento:"2020-03-29T03:00:00.000Z",valor:"123.00",status:false,conta_id:91010,usuario_id:3839,transferencia_id:null,parcelamento_id:null}
-            ]    
+            response: 'fixture:movimentacaoSalva'
         }).as('Criar Transação')
        
         cy.get(loc.MENU.MOVIMENTACAO).click()
