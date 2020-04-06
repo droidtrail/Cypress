@@ -74,7 +74,7 @@ describe('Deve fazer teste a nível funcional',()=>{
         cy.get(loc.MESSAGE).should('contain','status code 400')
     })
 
-    it.only('Deve criar uma transação',()=>{
+    it('Deve criar uma transação',()=>{
         cy.route({
             method:'POST',
             url:'/transacoes',
@@ -109,10 +109,59 @@ describe('Deve fazer teste a nível funcional',()=>{
         cy.xpath(loc.EXTRATO.FN_XP_BUSCA_ELEMENTO('Desc','123')).should('exist')
     })
 
-    it('Deve pegar o saldo',()=>{
+    it.only('Deve pegar o saldo',()=>{
+
+         cy.route({
+            method:'GET',
+            url:'/extrato/**',
+            response: 'fixture:movimentacaoSalva'
+        }).as('Obter Extrato')
+
         cy.get(loc.MENU.HOME).click()
-        cy.xpath(loc.SALDO.FN_XP_SALDO_CONTA('Conta para saldo','534'))
+        cy.xpath(loc.SALDO.FN_XP_SALDO_CONTA('Carteira','1.500,00'))
         cy.get(loc.MENU.EXTRATO).click()
+
+        cy.route({
+            method:'GET',
+            url:'/transacoes/**',
+            response: {
+                conta:"Conta para saldo",
+                id:75547,
+                descricao:"Movimentacao 1, calculo saldo",
+                envolvido:"CCC",
+                observacao:null,
+                tipo:"REC",
+                data_transacao:"2020-03-28T03:00:00.000Z",
+                data_pagamento:"2020-03-28T03:00:00.000Z",
+                valor:"3500.00",
+                status:false,
+                conta_id:91007,
+                usuario_id:3839,
+                transferencia_id:null,
+                parcelamento_id:null
+            }
+        })
+
+        cy.route({
+            method:'PUT',
+            url:'/transacoes/**',
+            response: {
+                conta:"Conta para saldo",
+                id:75547,
+                descricao:"Movimentacao 1, calculo saldo",
+                envolvido:"CCC",
+                observacao:null,
+                tipo:"REC",
+                data_transacao:"2020-03-28T03:00:00.000Z",
+                data_pagamento:"2020-03-28T03:00:00.000Z",
+                valor:"3500.00",
+                status:false,
+                conta_id:91007,
+                usuario_id:3839,
+                transferencia_id:null,
+                parcelamento_id:null
+            }
+        })
         cy.xpath(loc.EXTRATO.FN_XP_EDITAR_ELEMENTO('Movimentacao 1, calculo saldo')).click()
         // cy.wait(500)
         //Substituição do Wait
@@ -121,7 +170,7 @@ describe('Deve fazer teste a nível funcional',()=>{
         cy.get(loc.MOVIMENTACAO.BTN_SALVAR_MOVIMENTACAO).click()
         cy.get(loc.MESSAGE).should('contain','Movimentação alterada com sucesso!')
         cy.get(loc.MENU.HOME).click()
-        cy.xpath(loc.SALDO.FN_XP_SALDO_CONTA('Conta para saldo','4.034,00'))
+        cy.xpath(loc.SALDO.FN_XP_SALDO_CONTA('Carteira','1.500,00'))
     })
 
     it('Deve remover uma movimentação',()=>{
