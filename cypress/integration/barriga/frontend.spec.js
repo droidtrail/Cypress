@@ -193,4 +193,48 @@ describe('Deve fazer teste a nível funcional',()=>{
         cy.get(loc.MESSAGE).should('contain','sucesso')
         
     })
+
+    it.only('Deve validar os dados pra criar um conta',()=>{ 
+        cy.route({
+            method:'POST',
+            url:'/contas',
+            response:
+                {id:'05',nome:'Conta de teste',visivel:true,usuario_id:1}     
+        }).as('Inserir Conta')
+
+        cy.acessarMenuConta()
+            
+        cy.reqStub = cy.stub()
+        
+        cy.route({
+            method:'GET',
+            url:'/contas',
+            //Funcionou!
+            // onRequest: req => {
+            //     console.log(req)
+            //     expect(req.request.body).to.be.null
+            //     expect(req.request.headers).to.have.property('Authorization')
+            // },
+
+           //onRequest:reqStub,
+
+            response:[
+                {id:'03',nome:'Carteira',visivel:true,usuario_id:1},
+                {id:'04',nome:'Banco',visivel:true,usuario_id:1},
+                {id:'05',nome:'Conta de teste',visivel:true,usuario_id:1}
+            ]
+            
+        }).as('Obter Conta Inserida')
+        cy.inserirConta('{CONTROL}')
+        
+        // cy.wait('@Obter Conta Inserida').then(()=>{
+        //     console.log(reqStub.args[0][0])
+        //     reqStub(req.request.body).to.be.null
+        //     reqStub(req.request.headers).to.have.property('Authorization')
+        // })
+        //Não funcionou
+        // cy.wait('@Obter Conta Inserida').its('request.body').should('not.be.empty')
+        
+        cy.get(loc.MESSAGE).should('contain','Conta inserida com sucesso!')
+    })
 })
