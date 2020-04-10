@@ -142,5 +142,21 @@
         "usuario_id":3839,
         "transferencia_id":null,
         "parcelamento_id":null
+    },
+    {
+        "conta":"Movimentacao para exclusao",
+        "id":76194,
+        "descricao":"Movimentacao para exclusao",
+        "envolvido":"Inter",
+        "observacao":null,
+        "tipo":"REC",
+        "data_transacao":"2020-03-29T03:00:00.000Z",
+        "data_pagamento":"2020-03-29T03:00:00.000Z",
+        "valor":"123.00",
+        "status":false,
+        "conta_id":91010,
+        "usuario_id":3839,
+        "transferencia_id":null,
+        "parcelamento_id":null
     }
 ]    

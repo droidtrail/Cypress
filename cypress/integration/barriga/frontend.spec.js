@@ -109,9 +109,9 @@ describe('Deve fazer teste a nível funcional',()=>{
         cy.xpath(loc.EXTRATO.FN_XP_BUSCA_ELEMENTO('Desc','123')).should('exist')
     })
 
-    it.only('Deve pegar o saldo',()=>{
+    it('Deve pegar o saldo',()=>{
 
-         cy.route({
+        cy.route({
             method:'GET',
             url:'/extrato/**',
             response: 'fixture:movimentacaoSalva'
@@ -173,10 +173,24 @@ describe('Deve fazer teste a nível funcional',()=>{
         cy.xpath(loc.SALDO.FN_XP_SALDO_CONTA('Carteira','1.500,00'))
     })
 
-    it('Deve remover uma movimentação',()=>{
+    it.only('Deve remover uma movimentação',()=>{
+
+        cy.route({
+            method:'GET',
+            url:'/extrato/**',
+            response: 'fixture:movimentacaoSalva'
+        }).as('Obter Extrato')
+
+        cy.route({
+            method:'DELETE',
+            url:'/transacoes/**',
+            response: {},
+            status: 204
+        }).as('Deletar')
+
         cy.get(loc.MENU.EXTRATO).click()
         cy.xpath(loc.EXTRATO.FN_XP_REMOVER_ELEMENTO('Movimentacao para exclusao')).click()
-        cy.get(loc.MESSAGE).should('contain','Movimentação inserida com sucesso!')
+        cy.get(loc.MESSAGE).should('contain','sucesso')
         
     })
 })
