@@ -37,6 +37,7 @@ const locators={
         FN_XP_BUSCA_ELEMENTO:(desc, value) =>`//span[contains(.,\'${desc}\')]/following-sibling::small[contains(.,\'${value}\')]`,
         FN_XP_REMOVER_ELEMENTO: conta => `//span[contains(.,\'${conta}\')]/../../..//i[@class='far fa-trash-alt']`,
         FN_XP_EDITAR_ELEMENTO: movimentacao => `//span[contains(.,\'${movimentacao}\')]/../../..//i[@class='fas fa-edit']`,
+        FN_XP_LINHA: desc => `//span[contains(.,'${desc}')]/../../../..`,  
     },
 
     SALDO:{
