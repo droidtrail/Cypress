@@ -7,7 +7,7 @@ describe('Deve fazer teste a nível funcional',()=>{
 
     before(()=>{
        //support/commands.js
-       cy.login()
+       cy.login('leandro.nares@gmail.com','123')
        cy.resetApp()
     })
 
@@ -39,7 +39,7 @@ describe('Deve fazer teste a nível funcional',()=>{
         cy.get(loc.MESSAGE).should('contain','status code 400')
     })
 
-    it('Deve criar uma transação',()=>{
+    it.only('Deve criar uma transação',()=>{
         cy.get(loc.MENU.MOVIMENTACAO).click()
         cy.get(loc.MOVIMENTACAO.DESCRIÇÃO).type('Desc')
         cy.get(loc.MOVIMENTACAO.VALOR).type('123')
@@ -47,7 +47,7 @@ describe('Deve fazer teste a nível funcional',()=>{
         cy.get(loc.MOVIMENTACAO.CONTA).select('Conta para movimentacoes')
         cy.get(loc.MOVIMENTACAO.STATUS_PAGA).click()
         cy.get(loc.MOVIMENTACAO.BTN_SALVAR_MOVIMENTACAO).click()
-        cy.get(loc.MESSAGE).should('contain','Movimentação inserida com sucesso!')
+        cy.get(loc.MESSAGE).should('contain','sucesso!')
         cy.get(loc.EXTRATO.LINHAS_TABELA_EXTRATO).should('have.length',7)
         cy.xpath(loc.EXTRATO.FN_XP_BUSCA_ELEMENTO('Desc','123')).should('exist')
     })
@@ -70,7 +70,7 @@ describe('Deve fazer teste a nível funcional',()=>{
     it('Deve remover uma movimentação',()=>{
         cy.get(loc.MENU.EXTRATO).click()
         cy.xpath(loc.EXTRATO.FN_XP_REMOVER_ELEMENTO('Movimentacao para exclusao')).click()
-        cy.get(loc.MESSAGE).should('contain','Movimentação inserida com sucesso!')
+        cy.get(loc.MESSAGE).should('contain','sucesso!')
         
     })
 })
