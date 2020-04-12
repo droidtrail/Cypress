@@ -16,6 +16,23 @@ describe('Deve fazer teste a nível funcional',()=>{
         cy.clearLocalStorage()
     })
 
+    it('Deve testar responsividade',()=>{
+        cy.get('[data-test=menu-home]').should('exist')
+            .and('be.visible')
+
+        cy.viewport(500,700)
+        cy.get('[data-test=menu-home]').should('exist')
+            .and('be.not.visible')
+
+        cy.viewport('iphone-5')
+        cy.get('[data-test=menu-home]').should('exist')
+            .and('be.not.visible')
+
+        cy.viewport('ipad-2')
+        cy.get('[data-test=menu-home]').should('exist')
+            .and('be.visible')
+    })
+
     it('Deve criar uma conta',()=>{ 
         cy.route({
             method:'POST',
@@ -105,7 +122,7 @@ describe('Deve fazer teste a nível funcional',()=>{
         cy.get(loc.MOVIMENTACAO.BTN_SALVAR_MOVIMENTACAO).click()
         cy.get(loc.MESSAGE).should('contain','Movimentação inserida com sucesso!')
         cy.get(loc.EXTRATO.LINHAS_TABELA_EXTRATO)
-            .should('have.length',9)
+            .should('have.length',10)
         cy.xpath(loc.EXTRATO.FN_XP_BUSCA_ELEMENTO('Desc','123')).should('exist')
     })
 
@@ -173,7 +190,7 @@ describe('Deve fazer teste a nível funcional',()=>{
         cy.xpath(loc.SALDO.FN_XP_SALDO_CONTA('Carteira','1.500,00'))
     })
 
-    it.only('Deve remover uma movimentação',()=>{
+    it('Deve remover uma movimentação',()=>{
 
         cy.route({
             method:'GET',
@@ -194,7 +211,7 @@ describe('Deve fazer teste a nível funcional',()=>{
         
     })
 
-    it.only('Deve validar os dados pra criar um conta',()=>{ 
+    it('Deve validar os dados pra criar um conta',()=>{ 
         cy.route({
             method:'POST',
             url:'/contas',
@@ -238,7 +255,7 @@ describe('Deve fazer teste a nível funcional',()=>{
         cy.get(loc.MESSAGE).should('contain','Conta inserida com sucesso!')
     })
 
-    it.only('Deve testar as cores',()=>{
+    it('Deve testar as cores',()=>{
         cy.route({
             method: 'GET',
             url:'/extrato/**',
@@ -315,4 +332,6 @@ describe('Deve fazer teste a nível funcional',()=>{
         cy.xpath(loc.EXTRATO.FN_XP_LINHA('Despesa paga')).should('have.class', 'despesaPaga')
         cy.xpath(loc.EXTRATO.FN_XP_LINHA('Despesa pendente')).should('have.class','despesaPendente')
     })
+
+    
 })
