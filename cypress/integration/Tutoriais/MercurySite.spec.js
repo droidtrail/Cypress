@@ -63,13 +63,6 @@ describe('Mercury Home Page', () => {
         cy.get('[type="image"]')
             .click()
 
-
-
-
-
-
-
     })
-
 
 })
