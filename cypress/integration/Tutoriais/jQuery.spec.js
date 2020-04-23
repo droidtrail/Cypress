@@ -5,7 +5,7 @@ describe('JQuery',()=>{
     //     cy.viewport(1000,600)
     // })
 
-    it('Draggable: Default Functionality',()=>{
+    it.only('Draggable: Default Functionality',()=>{
         cy.visit('https://jqueryui.com/draggable/')
 
         cy.get('.demo-frame').then(iframe =>{
@@ -19,7 +19,7 @@ describe('JQuery',()=>{
         })
     })
 
-    it.only('Draggable: jQuery UI Draggable + Sortable',()=>{
+    it('Draggable: jQuery UI Draggable + Sortable',()=>{
 
         cy.visit('https://jqueryui.com/draggable/#sortable')
 

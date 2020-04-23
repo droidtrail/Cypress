@@ -25,3 +25,9 @@ Cypress.SelectorPlayground.defaults({
     selectorPriority: ['data-test','data-cy','id', 'class', 'attributes','data-testid','tag','nth-child','data-wc']
   })
 
+Cypress.on('uncaught:exception', (err, runnable) => {
+    // returning false here prevents Cypress from
+    // failing the test
+    return false
+  })
+
