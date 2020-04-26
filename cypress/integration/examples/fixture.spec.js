@@ -8,7 +8,7 @@ describe('Fixture tests',()=>{
 
         cy.fixture('userData').as('usuario').then(() => {
             
-            cy.get('#formNome').type(this.usuario.nome)
+            cy.get('#formNome').type(this.usuario.nome) 
             cy.get('#formSobrenome').type(this.usuario.sobrenome)
             cy.get(`[name=formSexo][value=${this.usuario.sexo}]`).click()
             cy.get(`[name='formComidaFavorita'][value=${this.usuario.comida}]`).click()

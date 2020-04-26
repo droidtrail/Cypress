@@ -1,8 +1,20 @@
-{
-    "nome":"Leandro",
-    "sobrenome":"Santos",
-    "sexo":"M",
-    "comida":"frango",
-    "escolaridade":"Mestrado",
-    "esportes":"Corrida"
-}
+[
+    {
+        "nome":"Antônio",
+        "sobrenome":"Carlos",
+        "sexo":"M",
+        "comida":"frango",
+        "escolaridade":"Mestrado",
+        "esportes":"Corrida"
+    },
+    {
+        "nome":"Maria",
+        "sobrenome":"Eugência",
+        "sexo":"F",
+        "comida":"frango",
+        "escolaridade":"Mestrado",
+        "esportes":"Corrida"
+    }
+
+]
+
