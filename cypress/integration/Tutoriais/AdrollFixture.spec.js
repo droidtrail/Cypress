@@ -13,11 +13,11 @@ describe('Fixtures', () => {
 
         cy.fixture('AdRoll').as('cadastro').then(() => {
 
-            cy.get('#first_name').type(this.cadastro.FirstName)
-            cy.get('#last_name').type(this.cadastro.LastName)
-            cy.get('#email').type(this.cadastro.CompanyEmail)
-            cy.get('#company_phone').type(this.cadastro.ComPhoNum)
-            cy.get('#url').type(this.cadastro.CompWebSiteUrl) 
+            cy.get('#first_name').type(this.cadastro[1].FirstName)
+            cy.get('#last_name').type(this.cadastro[1].LastName)
+            cy.get('#email').type(this.cadastro[1].CompanyEmail)
+            cy.get('#company_phone').type(this.cadastro[1].ComPhoNum)
+            cy.get('#url').type(this.cadastro[1].CompWebSiteUrl) 
         })
       
     }) 
