@@ -24,7 +24,8 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-import loc from './locators'
+import loc from './locators';
+import 'cypress-file-upload';
 
 Cypress.Commands.add('clickAlert',(locator, message)=>{
     cy.get(locator).click()
