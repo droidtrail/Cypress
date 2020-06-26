@@ -4,11 +4,11 @@
 const availablefixtures = [
     {
         "name": "toolsQaDataDriven_1.json",
-        "context": "1"
+        "context": "Cenário 1"
     },
     {
         "name": "toolsQaDataDriven_2.json",
-        "context": "2"
+        "context": "Cenário 2"
     }
 ]
 
